@@ -1,0 +1,27 @@
+<div class="todo-card">
+  <h2>Task Manager</h2>
+
+  <div class="input-area">
+    <input 
+      [(ngModel)]="newTodoTitle" 
+      (keyup.enter)="handleAdd()"
+      placeholder="What needs to be done?"
+    />
+    <button (click)="handleAdd()" [disabled]="!newTodoTitle().trim()">Add</button>
+  </div>
+
+  <ul class="todo-list">
+    @for (todo of todoService.todos(); track todo.id) {
+      <li class="todo-item">
+        <span>{{ todo.title }}</span>
+        <button class="delete-btn" (click)="todoService.remove(todo.id)">Delete</button>
+      </li>
+    } @empty {
+      <p class="empty-msg">No tasks yet. Add one above!</p>
+    }
+  </ul>
+  
+  <div class="footer">
+    Total: {{ todoService.todos().length }}
+  </div>
+</div>
